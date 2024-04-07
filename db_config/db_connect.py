@@ -1,20 +1,24 @@
 from pymongo import MongoClient
 from urllib.parse import quote_plus
 from fastapi import FastAPI
+from dotenv import load_dotenv
+import os
+
 
 app = FastAPI()
 
-# MongoDB Atlas credentials
-username = "Dotenv"
-password = "Lms@123"
-cluster_name = "cluster0.gggagwc.mongodb.net"
-database_name = "libmanager"
+load_dotenv()
 
-# Escape username and password
+
+username = os.getenv("MONGO_USERNAME")
+password = os.getenv("MONGO_PASSWORD")
+cluster_name = os.getenv("MONGO_CLUSTER_NAME")
+database_name = os.getenv("MONGO_DATABASE_NAME")
+
+
 escaped_username = quote_plus(username)
 escaped_password = quote_plus(password)
 
-# Construct MongoDB URI
 MONGO_URI = f"mongodb+srv://{escaped_username}:{escaped_password}@{cluster_name}/{database_name}?retryWrites=true&w=majority"
 
 try:
